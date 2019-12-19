@@ -1,6 +1,6 @@
 import os
 import logging
-
+import json
 
 class Config:
     DEFAULTS = { 
@@ -289,7 +289,7 @@ class Config:
                         setattr(Config, opt, v)
         else:
             logging.error("Could not find options file at: {}".format(Config.OPTIONS_FILE_LOCATION))
-            
+
         Config.CONFIG_LOADED = True
 
 
