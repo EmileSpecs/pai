@@ -4,13 +4,15 @@ ARG ARCH=""
 FROM ${ARCH}python:3.6-alpine3.10
 
 ENV WORK_DIR=workdir \
+  DATA_PATH=/data \
   PAI_CONFIG_PATH=/etc/pai \
   PAI_LOGGING_PATH=/var/log/pai \
   PAI_MQTT_BIND_PORT=18839 \
   PAI_MQTT_BIND_ADDRESS=0.0.0.0
 
 ENV PAI_CONFIG_FILE=${PAI_CONFIG_PATH}/pai.conf \
-  PAI_LOGGING_FILE=${PAI_LOGGING_PATH}/paradox.log
+  PAI_LOGGING_FILE=${PAI_LOGGING_PATH}/paradox.log \
+  OPTIONS_FILE=${DATA_PATH}/options.json
 
 # build /opt/mqttwarn
 RUN mkdir -p ${PAI_CONFIG_PATH} ${WORK_DIR} ${PAI_LOGGING_PATH}
@@ -38,6 +40,7 @@ USER pai
 # conf file from host
 VOLUME ${PAI_CONFIG_PATH}
 VOLUME ${PAI_LOGGING_PATH}
+VOLUME ${DATA_PATH}
 
 # For IP Interface
 EXPOSE ${PAI_MQTT_BIND_PORT}/tcp
